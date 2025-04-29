@@ -1,0 +1,676 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wellness Companion - Employee Mental Health</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #3066BE; /* Changed to a different shade of blue */
+            --secondary-color: #6D9DC5;
+            --light-color: #F5F7FF;
+            --dark-color: #2A3D66;
+            --success-color: #4CAF50;
+            --accent-color: #FF7E67;
+            --gray-100: #f8f9fa;
+            --gray-200: #e9ecef;
+            --gray-300: #dee2e6;
+            --gray-600: #6c757d;
+            --gray-800: #343a40;
+            --transition: all 0.3s ease;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.05);
+            --shadow-md: 0 4px 8px rgba(0,0,0,0.1);
+            --shadow-lg: 0 8px 16px rgba(0,0,0,0.1);
+            --border-radius: 12px;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            background-color: var(--light-color);
+            color: var(--gray-800);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        header {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--gray-300);
+            margin-bottom: 20px;
+        }
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .logo-icon {
+            font-size: 24px;
+            color: var(--primary-color);
+            background-color: rgba(48, 102, 190, 0.1);
+            padding: 10px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        h1 {
+            color: var(--primary-color);
+            font-size: 24px;
+            margin: 0;
+        }
+        .tagline {
+            color: var(--gray-600);
+            font-size: 14px;
+            margin-left: 20px;
+        }
+        .main-content {
+            display: flex;
+            flex: 1;
+            gap: 30px;
+        }
+        /* Conversation Stages Panel */
+        .stages-panel {
+            width: 280px;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .stages-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--dark-color);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .stages-title i {
+            color: var(--primary-color);
+        }
+        .stages-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+        .stage-item {
+            padding: 14px 16px;
+            margin-bottom: 10px;
+            border-radius: var(--border-radius);
+            background-color: var(--gray-100);
+            transition: var(--transition);
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .stage-item.active {
+            background-color: var(--primary-color);
+            color: white;
+            box-shadow: var(--shadow-sm);
+        }
+        .stage-item i {
+            font-size: 18px;
+            opacity: 0.8;
+        }
+        .stage-item.active i {
+            opacity: 1;
+        }
+        .stage-item .stage-name {
+            font-size: 14px;
+            font-weight: 500;
+        }
+        .stage-item .stage-connector {
+            position: absolute;
+            left: 22px;
+            bottom: -15px;
+            height: 20px;
+            width: 2px;
+            background-color: var(--gray-300);
+            z-index: 0;
+        }
+        .stage-item:last-child .stage-connector {
+            display: none;
+        }
+        .stage-item.active .stage-connector {
+            background-color: var(--primary-color);
+        }
+        .stage-item.completed {
+            background-color: var(--gray-200);
+        }
+        .stage-item.completed i {
+            color: var(--success-color);
+        }
+        /* Chatbot Panel */
+        .chatbot-panel {
+            flex: 1;
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--shadow-md);
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+        .chat-header {
+            padding: 20px;
+            background-color: var(--primary-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .chat-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 18px;
+            font-weight: 600;
+        }
+        .chat-title i {
+            font-size: 20px;
+        }
+        .chat-actions button {
+            background: none;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 5px 10px;
+            border-radius: 4px;
+            transition: var(--transition);
+        }
+        .chat-actions button:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-height: calc(100vh - 240px); /* Increased height by reducing header space */
+            scrollbar-width: thin; /* For Firefox */
+            scrollbar-color: var(--primary-color) var(--gray-200); /* For Firefox */
+        }
+        /* Custom scrollbar for WebKit browsers (Chrome, Safari, Edge) */
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+        .chat-messages::-webkit-scrollbar-track {
+            background: var(--gray-200);
+            border-radius: 10px;
+        }
+        .chat-messages::-webkit-scrollbar-thumb {
+            background-color: var(--primary-color);
+            border-radius: 10px;
+            border: 2px solid var(--gray-200);
+        }
+        .chat-messages::-webkit-scrollbar-thumb:hover {
+            background-color: var(--dark-color);
+        }
+        /* Ensure fixed height in responsive view too */
+        @media (max-width: 992px) {
+            .chat-messages {
+                max-height: 400px; /* Increased height for responsive view */
+            }
+        }
+        .message {
+            max-width: 75%;
+            padding: 15px;
+            border-radius: 18px;
+            position: relative;
+            word-wrap: break-word;
+            animation: fadeIn 0.3s ease;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .message.assistant {
+            align-self: flex-start;
+            background-color: var(--gray-100);
+            border-bottom-left-radius: 5px;
+        }
+        .message.user {
+            align-self: flex-end;
+            background-color: var(--primary-color);
+            color: white;
+            border-bottom-right-radius: 5px;
+        }
+        .message-time {
+            font-size: 12px;
+            opacity: 0.7;
+            margin-top: 6px;
+            text-align: right;
+        }
+        .message.assistant .message-time {
+            color: var(--gray-600);
+        }
+        .message.user .message-time {
+            color: rgba(255, 255, 255, 0.9);
+        }
+        .chat-input {
+            padding: 15px 20px;
+            border-top: 1px solid var(--gray-300);
+            display: flex;
+            gap: 10px;
+            background-color: white;
+        }
+        #user-input {
+            flex: 1;
+            padding: 15px;
+            border: 1px solid var(--gray-300);
+            border-radius: 25px;
+            font-size: 16px;
+            outline: none;
+            transition: var(--transition);
+        }
+        #user-input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(48, 102, 190, 0.2);
+        }
+        .send-btn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            transition: var(--transition);
+        }
+        .send-btn:hover {
+            background-color: var(--dark-color);
+            transform: scale(1.05);
+        }
+        .send-btn:disabled {
+            background-color: var(--gray-300);
+            cursor: not-allowed;
+        }
+        .typing-indicator {
+            display: none;
+            align-self: flex-start;
+            background-color: var(--gray-100);
+            padding: 12px 20px;
+            border-radius: 18px;
+            border-bottom-left-radius: 5px;
+            margin-bottom: 15px;
+        }
+        .typing-dots {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .dot {
+            width: 8px;
+            height: 8px;
+            background-color: var(--gray-600);
+            border-radius: 50%;
+            animation: typing 1.4s infinite ease-in-out;
+        }
+        .dot:nth-child(1) { animation-delay: 0s; }
+        .dot:nth-child(2) { animation-delay: 0.2s; }
+        .dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typing {
+            0%, 60%, 100% { transform: translateY(0); }
+            30% { transform: translateY(-5px); }
+        }
+        /* Footer styles */
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: var(--gray-600);
+            font-size: 14px;
+            padding: 10px 0;
+        }
+        /* Responsive styles */
+        @media (max-width: 992px) {
+            .container {
+                height: auto;
+                padding: 10px;
+            }
+            
+            .main-content {
+                flex-direction: column;
+            }
+            
+            .stages-panel {
+                width: 100%;
+                margin-bottom: 20px;
+            }
+            
+            .chatbot-panel {
+                height: 500px;
+            }
+            
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .tagline {
+                margin-left: 0;
+                margin-top: 5px;
+            }
+        }
+        /* Utility classes */
+        .d-flex {
+            display: flex;
+        }
+        .align-center {
+            align-items: center;
+        }
+        .justify-center {
+            justify-content: center;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">
+                <div class="logo-icon">
+                    <i class="fas fa-brain"></i> <!-- Changed logo icon -->
+                </div>
+                <h1>Wellness Companion</h1>
+            </div>
+            <p class="tagline">Your confidential mental health support assistant</p>
+        </header>
+        <div class="main-content">
+            <!-- Conversation Stages Panel -->
+            <div class="stages-panel">
+                <div class="stages-title">
+                    <i class="fas fa-list-check"></i>
+                    <span>Conversation Stages</span>
+                </div>
+                <ul class="stages-list">
+                    <li class="stage-item" data-stage="INITIAL_HANDSHAKE">
+                        <i class="fas fa-handshake"></i>
+                        <span class="stage-name">Initial Welcome</span>
+                        <div class="stage-connector"></div>
+                    </li>
+                    <li class="stage-item" data-stage="MOOD_ANALYSIS">
+                        <i class="fas fa-face-smile"></i>
+                        <span class="stage-name">Mood Analysis</span>
+                        <div class="stage-connector"></div>
+                    </li>
+                    <li class="stage-item" data-stage="UNDERSTANDING_ISSUE">
+                        <i class="fas fa-magnifying-glass"></i>
+                        <span class="stage-name">Understanding Issue</span>
+                        <div class="stage-connector"></div>
+                    </li>
+                    <li class="stage-item" data-stage="EMPATHETIC_CONVERSATION">
+                        <i class="fas fa-heart"></i>
+                        <span class="stage-name">Empathetic Conversation</span>
+                        <div class="stage-connector"></div>
+                    </li>
+                    <li class="stage-item" data-stage="TOOL_SUGGESTION">
+                        <i class="fas fa-toolbox"></i>
+                        <span class="stage-name">Tool Suggestion</span>
+                        <div class="stage-connector"></div>
+                    </li>
+                    <li class="stage-item" data-stage="PLAN_OF_ACTION">
+                        <i class="fas fa-list-check"></i>
+                        <span class="stage-name">Plan of Action</span>
+                        <div class="stage-connector"></div>
+                    </li>
+                    <li class="stage-item" data-stage="CLOSING">
+                        <i class="fas fa-flag-checkered"></i>
+                        <span class="stage-name">Closing</span>
+                    </li>
+                </ul>
+            </div>
+            <!-- Chatbot Panel -->
+            <div class="chatbot-panel">
+                <div class="chat-header">
+                    <div class="chat-title">
+                        <i class="fas fa-robot"></i>
+                        <span>Wellness Assistant</span>
+                    </div>
+                    <div class="chat-actions">
+                        <button id="reset-chat" title="Reset Conversation">
+                            <i class="fas fa-arrows-rotate"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="chat-messages" id="chat-messages">
+                    <!-- Messages will be dynamically added here -->
+                </div>
+                <div class="typing-indicator" id="typing-indicator">
+                    <div class="typing-dots">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                </div>
+                <div class="chat-input">
+                    <input 
+                        type="text" 
+                        id="user-input" 
+                        placeholder="Type your message here..." 
+                        aria-label="Type your message"
+                    >
+                    <button class="send-btn" id="send-btn" title="Send Message">
+                        <i class="fas fa-paper-plane" id="send-icon"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <footer>
+            <p>© 2025 Wellness Companion | Your mental wellbeing matters to us</p>
+        </footer>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Elements
+            const chatMessages = document.getElementById('chat-messages');
+            const userInput = document.getElementById('user-input');
+            const sendBtn = document.getElementById('send-btn');
+            const resetBtn = document.getElementById('reset-chat');
+            const typingIndicator = document.getElementById('typing-indicator');
+            const sendIcon = document.getElementById('send-icon');
+            
+            // API endpoint
+            const BACKEND_IP = 'http://127.0.0.1:5001'
+            const API_ENDPOINT = BACKEND_IP + '/api/chat';
+            const RESET_ENDPOINT = BACKEND_IP + '/api/reset';
+            // Message history
+            let messageHistory = [];
+            // Initialize chat
+            function initChat() {
+                // Clear existing messages
+                chatMessages.innerHTML = '';
+                messageHistory = [];
+                
+                // Add a welcome message
+                showTypingIndicator();
+                
+                // Simulate initial message from API
+                setTimeout(() => {
+                    hideTypingIndicator();
+                    
+                    addMessage(
+                        "Hello! I'm your Wellness Companion. I'm here to chat, listen, and help you navigate any challenges you might be facing. How are you feeling today?",
+                        'assistant'
+                    );
+                    
+                    // Set initial stage
+                    updateStage('INITIAL_HANDSHAKE');
+                }, 1000);
+            }
+            // Show typing indicator
+            function showTypingIndicator() {
+                typingIndicator.style.display = 'block';
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            // Hide typing indicator
+            function hideTypingIndicator() {
+                typingIndicator.style.display = 'none';
+            }
+            // Add message to chat
+            function addMessage(text, sender) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message', sender);
+                
+                // Message text
+                const messageText = document.createElement('div');
+                messageText.classList.add('message-text');
+                messageText.textContent = text;
+                
+                // Message time
+                const messageTime = document.createElement('div');
+                messageTime.classList.add('message-time');
+                const now = new Date();
+                messageTime.textContent = `${now.getHours()}:${now.getMinutes().toString().padStart(2, '0')}`;
+                
+                messageDiv.appendChild(messageText);
+                messageDiv.appendChild(messageTime);
+                
+                chatMessages.appendChild(messageDiv);
+                
+                // Save to history
+                messageHistory.push({
+                    text,
+                    sender,
+                    timestamp: now
+                });
+                
+                // Scroll to bottom
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            // Update conversation stage
+            function updateStage(stageName) {
+                // Remove active class from all stages
+                document.querySelectorAll('.stage-item').forEach(item => {
+                    item.classList.remove('active');
+                });
+                
+                // Add active class to current stage
+                const currentStage = document.querySelector(`.stage-item[data-stage="${stageName}"]`);
+                if (currentStage) {
+                    currentStage.classList.add('active');
+                    
+                    // Mark previous stages as completed
+                    let prevStage = currentStage.previousElementSibling;
+                    while (prevStage) {
+                        prevStage.classList.add('completed');
+                        prevStage = prevStage.previousElementSibling;
+                    }
+                }
+            }
+            // Send message to API
+            async function sendMessage(message) {
+                try {
+                    // Disable input and button while sending
+                    sendBtn.disabled = true;
+                    userInput.disabled = true;
+                    
+                    const response = await fetch(API_ENDPOINT, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            user_message: message
+                        })
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+                    
+                    const data = await response.json();                    
+                    // Show typing indicator for a more natural feel
+                    showTypingIndicator();
+                    
+                    setTimeout(() => {
+                        hideTypingIndicator();
+                        
+                        // Display assistant message
+                        addMessage(data.assistant_message, 'assistant');
+                        
+                        // Update the conversation stage
+                        if (data.conversation_state && data.conversation_state.current_stage) {
+                            updateStage(data.conversation_state.current_stage);
+                        }
+                        
+                        // Enable input
+                        userInput.disabled = false;
+                        userInput.focus();
+                    }, 1000);
+                    
+                } catch (error) {
+                    console.error('Error:', error);
+                    addMessage('Sorry, I encountered a problem. Please try again.', 'assistant');
+                } finally {
+                    // Re-enable button
+                    sendBtn.disabled = false;
+                    userInput.disabled = false;
+                }
+            }
+            // Reset chat
+            async function resetChat() {
+                try {
+                    const response = await fetch(RESET_ENDPOINT, {
+                        method: 'POST'
+                    });
+                    
+                    if (!response.ok) {
+                        throw new Error('Failed to reset chat');
+                    }
+                    
+                    // Reset UI
+                    initChat();
+                    
+                } catch (error) {
+                    console.error('Error resetting chat:', error);
+                    alert('Failed to reset chat. Please refresh the page.');
+                }
+            }
+            // Event listeners
+            sendBtn.addEventListener('click', () => {
+                const message = userInput.value.trim();
+                if (message) {
+                    addMessage(message, 'user');
+                    userInput.value = '';
+                    sendMessage(message);
+                }
+            });
+            userInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter' && userInput.value.trim()) {
+                    sendBtn.click();
+                }
+            });
+            resetBtn.addEventListener('click', resetChat);
+            // Initialize on load
+            initChat();
+        });
+    </script>
+</body>
+</html>
