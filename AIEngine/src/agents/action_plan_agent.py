@@ -28,7 +28,7 @@ class ActionPlanAgent(Agent):
                 
             response += "\nHow does this plan sound to you? Is there anything you'd like to adjust?"
             
-            
+            return response, context, False
         
         # Analyze user feedback on the plan
         feedback_analysis = self.analyze_feedback(user_input, context)
