@@ -31,7 +31,7 @@ class ActionPlanAgent(Agent):
             return response, context, False
         
         # Analyze user feedback on the plan
-        feedback_analysis = self.analyze_feedback(user_input, context)
+        
         context["plan_feedback"] = feedback_analysis
         
         # Check if user wants to adjust the plan
