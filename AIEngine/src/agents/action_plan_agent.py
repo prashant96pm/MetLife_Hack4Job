@@ -36,7 +36,7 @@ class ActionPlanAgent(Agent):
         
         # Check if user wants to adjust the plan
         if feedback_analysis.get("wants_adjustment", False):
-            
+            # User wants to adjust - stay in action plan stage
             updated_plan = self.adjust_plan(user_input, context)
             return updated_plan, context, False
         else:
