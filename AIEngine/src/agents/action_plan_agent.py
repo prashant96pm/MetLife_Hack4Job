@@ -6,6 +6,7 @@ class ActionPlanAgent(Agent):
     def __init__(self, api_token: str):
         super().__init__("Action Plan Agent", api_token)
     
+    def process(self, user_input: str, context: Dict) -> Tuple[str, Dict, bool]:
         """
         Create an action plan and handle user feedback.
         Returns: (response, updated_context, should_transition)
@@ -17,7 +18,7 @@ class ActionPlanAgent(Agent):
             context["action_plan_attempts"] = 1
             
             # Format the response
-            response = action_plan.get("plan_introduction", "I'd like to suggest a few actions for tomorrow that might help:") + "\n\n"
+            
             
             for i, action in enumerate(action_plan.get("actions", []), 1):
                 response += f"{i}. **{action.get('title', 'Action')}**: {action.get('description', '')}\n"
