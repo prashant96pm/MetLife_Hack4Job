@@ -26,7 +26,7 @@ class ActionPlanAgent(Agent):
             if "additional_suggestion" in action_plan:
                 response +=  f"\nOne more thing: {action_plan['additional_suggestion']}\n"
                 
-            
+            response += "\nHow does this plan sound to you? Is there anything you'd like to adjust?"
             
             return response, context, False
         
