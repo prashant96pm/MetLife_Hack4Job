@@ -45,7 +45,7 @@ class ActionPlanAgent(Agent):
  
     
     def create_action_plan(self, context: Dict) -> Dict:
-        
+        system_prompt = """
         Create a simple action plan for the user based on what you've learned about their
         mood, challenges, and workplace situation. Focus on 3-5 small, actionable steps they
         can take tomorrow to improve their wellbeing. Be specific and realistic. Consider
