@@ -44,7 +44,7 @@ class ActionPlanAgent(Agent):
             return "Thank you for your feedback. I hope this plan will be helpful for you.", context, True
  
     
-    
+    def create_action_plan(self, context: Dict) -> Dict:
         system_prompt = """
         Create a simple action plan for the user based on what you've learned about their
         mood, challenges, and workplace situation. Focus on 3-5 small, actionable steps they
