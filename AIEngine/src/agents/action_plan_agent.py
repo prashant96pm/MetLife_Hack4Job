@@ -41,7 +41,7 @@ class ActionPlanAgent(Agent):
             return updated_plan, context, False
         else:
             # User is satisfied or neutral about the plan - transition to closing
-            
+            return "Thank you for your feedback. I hope this plan will be helpful for you.", context, True
  
     
     def create_action_plan(self, context: Dict) -> Dict:
