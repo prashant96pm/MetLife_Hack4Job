@@ -2,7 +2,7 @@ from agents.base_agent import Agent
 from typing import Dict, Tuple
 
 
-class ActionPlanAgent(Agent):
+
     def __init__(self, api_token: str):
         super().__init__("Action Plan Agent", api_token)
     
