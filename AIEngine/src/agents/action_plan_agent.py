@@ -6,7 +6,7 @@ class ActionPlanAgent(Agent):
     def __init__(self, api_token: str):
         super().__init__("Action Plan Agent", api_token)
     
-    def process(self, user_input: str, context: Dict) -> Tuple[str, Dict, bool]:
+    
         """
         Create an action plan and handle user feedback.
         Returns: (response, updated_context, should_transition)
