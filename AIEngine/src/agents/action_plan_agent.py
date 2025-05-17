@@ -14,7 +14,7 @@ class ActionPlanAgent(Agent):
         # If this is first time in this state, create action plan
         if context.get("action_plan_attempts", 0) == 0:
             action_plan = self.create_action_plan(context)
-            context["action_plan"] = action_plan
+            
             context["action_plan_attempts"] = 1
             
             # Format the response
