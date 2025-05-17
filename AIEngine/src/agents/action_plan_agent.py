@@ -20,7 +20,7 @@ class ActionPlanAgent(Agent):
             # Format the response
             response = action_plan.get("plan_introduction", "I'd like to suggest a few actions for tomorrow that might help:") + "\n\n"
             
-            for i, action in enumerate(action_plan.get("actions", []), 1):
+            
                 response += f"{i}. **{action.get('title', 'Action')}**: {action.get('description', '')}\n"
             
             if "additional_suggestion" in action_plan:
