@@ -32,7 +32,7 @@ class ActionPlanAgent(Agent):
         
         # Analyze user feedback on the plan
         feedback_analysis = self.analyze_feedback(user_input, context)
-        
+        context["plan_feedback"] = feedback_analysis
         
         # Check if user wants to adjust the plan
         if feedback_analysis.get("wants_adjustment", False):
