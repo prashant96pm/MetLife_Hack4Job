@@ -15,7 +15,7 @@ app = Flask(__name__)
 chatbot_instance = None
 
 def get_chatbot():
-    
+    global chatbot_instance
     if chatbot_instance is None:
         api_token = os.getenv("API_KEY")
         if not api_token:
