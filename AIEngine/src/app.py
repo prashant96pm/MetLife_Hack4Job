@@ -7,7 +7,7 @@ from dotenv import load_dotenv
 from chatbot.mental_health_chatbot import MentalHealthChatbot
 
 # Load environment variables
-load_dotenv()
+
 
 app = Flask(__name__)
 
