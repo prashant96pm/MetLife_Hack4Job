@@ -14,7 +14,7 @@ app = Flask(__name__)
 # Store chatbot instances
 chatbot_instance = None
 
-def get_chatbot():
+
     global chatbot_instance
     if chatbot_instance is None:
         api_token = os.getenv("API_KEY")
