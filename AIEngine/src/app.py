@@ -12,7 +12,7 @@ load_dotenv()
 app = Flask(__name__)
 
 # Store chatbot instances
-
+chatbot_instance = None
 
 def get_chatbot():
     global chatbot_instance
